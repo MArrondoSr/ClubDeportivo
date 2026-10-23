@@ -88,46 +88,89 @@ namespace ClubDeportivo
 
             if (clienteSeleccionado.esSocio())
             {
-                MessageBox.Show("El cliente ya posee carnet.");
+                MessageBox.Show("El cliente ya es socio.");
                 return;
             }
 
-            CarnetDatos carnetDatos = new CarnetDatos();
-
-            // PERSISTENCIA: utilizamos el identificador interno del cliente.
-            int nroCarnet =
-                carnetDatos.generarCarnet(clienteSeleccionado.getIdCliente());
-
-            Carnet carnet = new Carnet(nroCarnet);
-
-            // ENCAPSULAMIENTO: asignamos el carnet mediante
-            // un método público de Cliente.
-            clienteSeleccionado.asignarCarnet(carnet);
-
-            lblEstado.Text = "Socio";
-
-            //check, si existe mail registrado se enviaria copi al mail,
-            //sino se muestra "no existe mail registrado, entregar en persona"
-            string segundaLinea = "";
-
-            if (!string.IsNullOrWhiteSpace(clienteSeleccionado.getMail()))
+            // VALIDACIÓN: la asociación requiere el pago
+            // de la primera cuota mensual.
+            if (!decimal.TryParse(txtImporte.Text, out decimal importe)
+                || importe <= 0)
             {
-                segundaLinea = "Se ha enviado una copia a: " + clienteSeleccionado.getMail();
+                MessageBox.Show("Ingrese el importe de la primera cuota mensual.");
+                return;
+            }
+
+            // POLIMORFISMO:
+            // Trabajamos con una referencia de tipo Pago,
+            // que puede contener un PagoEfectivo o un PagoTarjeta.
+            Pago pago;
+
+            if (cmbMedioPago.Text == "Efectivo")
+            {
+                pago = new PagoEfectivo(DateTime.Today, importe);
+            }
+            else if (cmbMedioPago.Text == "Tarjeta")
+            {
+                if (cmbCuotas.SelectedIndex == -1)
+                {
+                    MessageBox.Show("Seleccione 3 o 6 cuotas.");
+                    return;
+                }
+
+                int cantidadCuotas = Convert.ToInt32(cmbCuotas.Text);
+
+                if (cantidadCuotas != 3 && cantidadCuotas != 6)
+                {
+                    MessageBox.Show("La cantidad de cuotas debe ser 3 o 6.");
+                    return;
+                }
+
+                pago = new PagoTarjeta(
+                    DateTime.Today, importe, cantidadCuotas);
             }
             else
             {
-                segundaLinea = "No existe mail registrado, entregar en persona.";
+                MessageBox.Show("Seleccione un medio de pago.");
+                return;
             }
 
-            MessageBox.Show(
-                "Carnet emitido correctamente. Número: " + nroCarnet +
-                "\n" + segundaLinea
+            try
+            {
+                // TRANSACCIÓN:
+                // Registramos el primer pago y generamos el carnet
+                // como una única operación en MySQL.
+                AsociacionDatos asociacionDatos = new AsociacionDatos();
 
-            //***************************************************
-            );
+                int nroCarnet = asociacionDatos.asociarCliente(
+                    clienteSeleccionado.getIdCliente(), pago);
 
+                // ENCAPSULAMIENTO:
+                // Actualizamos el objeto solamente después
+                // de confirmar la transacción.
+                Carnet carnet = new Carnet(nroCarnet);
+                clienteSeleccionado.asignarCarnet(carnet);
+                clienteSeleccionado.agregarPago(pago);
+
+                lblEstado.Text = "Socio";
+
+                MessageBox.Show(
+                    "Cliente asociado correctamente.\n" +
+                    "Primera cuota mensual registrada.\n" +
+                    "Número de carnet: " + nroCarnet
+                );
+
+                txtImporte.Clear();
+                cmbMedioPago.SelectedIndex = 0;
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(
+                    "No se pudo completar la asociación.\n\n" +
+                    ex.Message
+                );
+            }
         }
-
         private void cmbMedioPago_SelectedIndexChanged(object sender, EventArgs e)
         {
             if (cmbMedioPago.Text == "Tarjeta")
@@ -151,22 +194,37 @@ namespace ClubDeportivo
                 return;
             }
 
-            if (!decimal.TryParse(txtImporte.Text, out decimal importe) || importe <= 0)
+            // REGLA DE NEGOCIO:
+            // Este botón registra renovaciones mensuales de socios.
+            // Los pagos diarios de no socios se implementarán
+            // posteriormente, con su propia identificación en MySQL.
+            if (!clienteSeleccionado.esSocio())
+            {
+                MessageBox.Show(
+                    "El cliente no es socio.\n" +
+                    "Para asociarlo, utilice el botón Asociar Cliente.\n\n" +
+                    "El pago diario se implementará por separado."
+                );
+                return;
+            }
+
+            if (!decimal.TryParse(txtImporte.Text, out decimal importe)
+                || importe <= 0)
             {
                 MessageBox.Show("Ingrese un importe válido.");
                 return;
             }
 
-            // POLIMORFISMO: una referencia de tipo Pago puede contener
-            // un objeto PagoEfectivo o PagoTarjeta, gracias a la herencia.
-
+            // POLIMORFISMO:
+            // Una referencia de tipo Pago puede contener un objeto
+            // PagoEfectivo o PagoTarjeta, gracias a la herencia.
             Pago pago;
 
             if (cmbMedioPago.Text == "Efectivo")
             {
                 pago = new PagoEfectivo(DateTime.Today, importe);
             }
-            else
+            else if (cmbMedioPago.Text == "Tarjeta")
             {
                 if (cmbCuotas.SelectedIndex == -1)
                 {
@@ -188,30 +246,65 @@ namespace ClubDeportivo
                     cantidadCuotas
                 );
             }
+            else
+            {
+                MessageBox.Show("Seleccione un medio de pago.");
+                return;
+            }
 
-            PagoDatos pagoDatos = new PagoDatos();
+            try
+            {
+                // ASOCIACIÓN ENTRE OBJETOS:
+                // Obtenemos el carnet del cliente seleccionado.
+                // No generamos uno nuevo porque ya es socio.
+                Carnet? carnet = clienteSeleccionado.getCarnet();
 
-            int idPago = pagoDatos.registrarPago(
-                clienteSeleccionado.getIdCliente(),
-                pago
-            );
+                if (carnet == null)
+                {
+                    MessageBox.Show("No se encontró el carnet del socio.");
+                    return;
+                }
 
-            // CONSISTENCIA: agregamos el pago a la lista del cliente solo
-            // despues de que el INSERT en MySQL se ejecuto correctamente.
+                // TRANSACCIÓN:
+                // RenovacionDatos registra el pago y la nueva cuota
+                // mensual como una única operación en MySQL.
+                //
+                // REGLA DE NEGOCIO:
+                // Si el socio paga anticipadamente, conserva los días
+                // abonados porque la nueva cuota comienza en el
+                // vencimiento de la cuota anterior.
+                RenovacionDatos renovacionDatos = new RenovacionDatos();
 
-            clienteSeleccionado.agregarPago(pago);
+                int idCuota = renovacionDatos.renovarCuota(
+                    clienteSeleccionado.getIdCliente(),
+                    carnet.getNroCarnet(),
+                    pago
+                );
 
-            // POLIMORFISMO EN EJECUCIÓN: obtenerDetalle() llama a la versión
-            // sobrescrita (override) correspondiente al tipo real del objeto,
-            // sin necesidad de preguntar si es PagoEfectivo o PagoTarjeta.
+                // CONSISTENCIA:
+                // Agregamos el pago al objeto Cliente solamente
+                // después de confirmar la transacción.
+                clienteSeleccionado.agregarPago(pago);
 
-            MessageBox.Show(
-                "Pago registrado correctamente.\n\n" +
-                pago.obtenerDetalle()
-            );
+                // POLIMORFISMO EN EJECUCIÓN:
+                // obtenerDetalle() utiliza la implementación
+                // correspondiente al tipo real del objeto Pago.
+                MessageBox.Show(
+                    "Cuota mensual renovada correctamente.\n" +
+                    "Número de cuota: " + idCuota + "\n\n" +
+                    pago.obtenerDetalle()
+                );
 
-            txtImporte.Text = "";
-            cmbMedioPago.SelectedIndex = 0;
+                txtImporte.Clear();
+                cmbMedioPago.SelectedIndex = 0;
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(
+                    "No se pudo registrar la renovación.\n\n" +
+                    ex.Message
+                );
+            }
         }
 
         private void limpiarFormulario()

@@ -40,5 +40,15 @@ namespace ClubDeportivo
             // Al finalizar ShowDialog(), regresamos a FormLogin.
             this.Close();
         }
+
+        private void btnVtos_Click(object sender, EventArgs e)
+        {
+            // Creamos una instancia del formulario de vencimientos.
+            FormVencimientos formulario = new FormVencimientos();
+
+            // ShowDialog() abre el formulario de manera modal:
+            // el usuario debe cerrarlo antes de regresar al menú principal.
+            formulario.ShowDialog();
+        }
     }
 }

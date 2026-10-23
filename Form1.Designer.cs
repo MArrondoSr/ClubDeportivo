@@ -93,6 +93,7 @@
             btnVtos.TabIndex = 6;
             btnVtos.Text = "Vencimientos";
             btnVtos.UseVisualStyleBackColor = false;
+            btnVtos.Click += btnVtos_Click;
             // 
             // btnCerrar
             // 

@@ -139,7 +139,7 @@
             btnEmitirCarnet.Name = "btnEmitirCarnet";
             btnEmitirCarnet.Size = new Size(162, 49);
             btnEmitirCarnet.TabIndex = 8;
-            btnEmitirCarnet.Text = "Emitir Carnet";
+            btnEmitirCarnet.Text = "Asociar Cliente";
             btnEmitirCarnet.UseVisualStyleBackColor = false;
             btnEmitirCarnet.Click += btnEmitirCarnet_Click;
             // 

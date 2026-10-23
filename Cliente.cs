@@ -122,5 +122,16 @@ namespace ClubDeportivo
         {
             pagos.Add(pago);
         }
+
+        // ENCAPSULAMIENTO:
+        // Permite consultar el carnet asociado al cliente
+        // sin acceder directamente al atributo privado.
+        //
+        // Si el cliente todavía no es socio, devuelve null.
+        // El signo ? indica que la referencia puede ser nula.
+        public Carnet? getCarnet()
+        {
+            return carnet;
+        }
     }
 }

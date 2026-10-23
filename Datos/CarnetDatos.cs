@@ -66,6 +66,34 @@ namespace ClubDeportivo.Datos
 
             return null;
         }
+
+        // PERSISTENCIA Y TRANSACCIONES:
+        // Este método utiliza una conexión y una transacción
+        // recibidas desde otra clase.
+        //
+        // No abre una nueva conexión ni confirma la transacción.
+        // Así podemos registrar el pago y emitir el carnet
+        // como una única operación en MySQL.
+        // SOBRECARGA
+
+        public int generarCarnet(
+            int idCliente,
+            MySqlConnection conexion,
+            MySqlTransaction transaccion)
+        {
+            string sql = @"INSERT INTO carnets (idCliente)
+                   VALUES (@idCliente)";
+
+            using (MySqlCommand comando =
+                new MySqlCommand(sql, conexion, transaccion))
+            {
+                comando.Parameters.AddWithValue("@idCliente", idCliente);
+
+                comando.ExecuteNonQuery();
+
+                return Convert.ToInt32(comando.LastInsertedId);
+            }
+        }
     }
     }
 
