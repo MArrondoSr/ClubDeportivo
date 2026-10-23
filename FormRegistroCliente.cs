@@ -45,6 +45,26 @@ namespace ClubDeportivo
                 return;
             }
 
+            // REGLA DE NEGOCIO:
+            // Según los requisitos acordados para el sistema,
+            // no se permite registrar un cliente que no haya
+            // presentado el apto físico.
+            //
+            // Esta validación se aplica tanto a futuros socios
+            // como a clientes que utilizarán pases diarios.
+            if (!chkAptoFisico.Checked)
+            {
+                MessageBox.Show(
+                    "No se puede registrar al cliente.\n" +
+                    "Debe presentar el apto físico obligatorio.",
+                    "Apto físico requerido",
+                    MessageBoxButtons.OK,
+                    MessageBoxIcon.Warning
+                );
+
+                return;
+            }
+
             // Recuperamos los datos ingresados en el formulario.
             string tipoDocumento = cmbTipoDocumento.Text;
             string nroDocumento = txtNroDocumento.Text.Trim();

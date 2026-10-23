@@ -194,20 +194,7 @@ namespace ClubDeportivo
                 return;
             }
 
-            // REGLA DE NEGOCIO:
-            // Este botón registra renovaciones mensuales de socios.
-            // Los pagos diarios de no socios se implementarán
-            // posteriormente, con su propia identificación en MySQL.
-            if (!clienteSeleccionado.esSocio())
-            {
-                MessageBox.Show(
-                    "El cliente no es socio.\n" +
-                    "Para asociarlo, utilice el botón Asociar Cliente.\n\n" +
-                    "El pago diario se implementará por separado."
-                );
-                return;
-            }
-
+            
             if (!decimal.TryParse(txtImporte.Text, out decimal importe)
                 || importe <= 0)
             {
@@ -254,6 +241,65 @@ namespace ClubDeportivo
 
             try
             {
+                // REGLA DE NEGOCIO:
+                // Si el cliente no es socio, registramos un pase diario.
+                // No se genera carnet ni cuota mensual.
+                if (!clienteSeleccionado.esSocio())
+                {
+                    // PERSISTENCIA:
+                    // Utilizamos la sobrecarga de PagoDatos que permite
+                    // identificar explícitamente el concepto del pago.
+                    PagoDatos pagoDatos = new PagoDatos();
+
+                    // REGLA DE NEGOCIO:
+                    // Un no socio puede abonar un solo pase diario
+                    // para una misma fecha.
+                    //
+                    // Consultamos MySQL antes de registrar el pago
+                    // para evitar cobros duplicados.
+                    if (pagoDatos.existePagoDiario(
+                        clienteSeleccionado.getIdCliente(),
+                        pago.getFecha()))
+                    {
+                        MessageBox.Show(
+                            "El cliente ya tiene registrado un pase diario " +
+                            "para la fecha de hoy.\n\n" +
+                            "No corresponde realizar otro cobro.",
+                            "Pago diario duplicado",
+                            MessageBoxButtons.OK,
+                            MessageBoxIcon.Warning
+                        );
+
+                        return;
+                    }
+
+                    int idPago = pagoDatos.registrarPago(
+                        clienteSeleccionado.getIdCliente(),
+                        pago,
+                        "PASE_DIARIO"
+                    );
+
+                    // CONSISTENCIA ENTRE OBJETOS Y BASE DE DATOS:
+                    // Actualizamos el objeto Cliente únicamente después
+                    // de registrar correctamente el pago en MySQL.
+                    clienteSeleccionado.agregarPago(pago);
+
+                    // POLIMORFISMO:
+                    // obtenerDetalle() ejecuta el comportamiento
+                    // correspondiente a PagoEfectivo o PagoTarjeta.
+                    MessageBox.Show(
+                        "Pase diario registrado correctamente.\n" +
+                        "Número de pago: " + idPago + "\n\n" +
+                        pago.obtenerDetalle()
+                    );
+
+                    txtImporte.Clear();
+                    cmbMedioPago.SelectedIndex = 0;
+
+                    // Finalizamos el método para evitar ejecutar
+                    // la renovación mensual destinada a los socios.
+                    return;
+                }
                 // ASOCIACIÓN ENTRE OBJETOS:
                 // Obtenemos el carnet del cliente seleccionado.
                 // No generamos uno nuevo porque ya es socio.
