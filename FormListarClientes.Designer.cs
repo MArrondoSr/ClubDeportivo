@@ -42,6 +42,7 @@
             telefono = new DataGridViewTextBoxColumn();
             mail = new DataGridViewTextBoxColumn();
             aptoFisico = new DataGridViewTextBoxColumn();
+            btnVolver = new Button();
             ((System.ComponentModel.ISupportInitialize)pictureBox1).BeginInit();
             ((System.ComponentModel.ISupportInitialize)dataGridView1).BeginInit();
             SuspendLayout();
@@ -59,7 +60,7 @@
             // listarClientes
             // 
             listarClientes.Font = new Font("Segoe UI", 19.8000011F, FontStyle.Bold | FontStyle.Italic, GraphicsUnit.Point, 0);
-            listarClientes.Location = new Point(404, 9);
+            listarClientes.Location = new Point(270, 58);
             listarClientes.Name = "listarClientes";
             listarClientes.Size = new Size(331, 46);
             listarClientes.TabIndex = 2;
@@ -67,6 +68,7 @@
             // 
             // dataGridView1
             // 
+            dataGridView1.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
             dataGridView1.BackgroundColor = Color.FromArgb(120, 125, 179);
             dataGridViewCellStyle1.Alignment = DataGridViewContentAlignment.MiddleCenter;
             dataGridViewCellStyle1.BackColor = SystemColors.Control;
@@ -86,10 +88,10 @@
             dataGridViewCellStyle2.SelectionForeColor = SystemColors.HighlightText;
             dataGridViewCellStyle2.WrapMode = DataGridViewTriState.False;
             dataGridView1.DefaultCellStyle = dataGridViewCellStyle2;
-            dataGridView1.Location = new Point(153, 97);
+            dataGridView1.Location = new Point(12, 163);
             dataGridView1.Name = "dataGridView1";
             dataGridView1.RowHeadersWidth = 51;
-            dataGridView1.Size = new Size(803, 188);
+            dataGridView1.Size = new Size(776, 350);
             dataGridView1.TabIndex = 3;
             // 
             // tipoDocumento
@@ -98,7 +100,6 @@
             tipoDocumento.HeaderText = "Tipo Doc.";
             tipoDocumento.MinimumWidth = 6;
             tipoDocumento.Name = "tipoDocumento";
-            tipoDocumento.Width = 125;
             // 
             // NroDocumento
             // 
@@ -106,55 +107,61 @@
             NroDocumento.HeaderText = "Nro. Documento";
             NroDocumento.MinimumWidth = 6;
             NroDocumento.Name = "NroDocumento";
-            NroDocumento.Width = 125;
             // 
             // nombre
             // 
             nombre.HeaderText = "Nombre";
             nombre.MinimumWidth = 6;
             nombre.Name = "nombre";
-            nombre.Width = 125;
             // 
             // apellido
             // 
             apellido.HeaderText = "Apellido";
             apellido.MinimumWidth = 6;
             apellido.Name = "apellido";
-            apellido.Width = 125;
             // 
             // domicilio
             // 
             domicilio.HeaderText = "Domicilio";
             domicilio.MinimumWidth = 6;
             domicilio.Name = "domicilio";
-            domicilio.Width = 125;
             // 
             // telefono
             // 
             telefono.HeaderText = "Telefono";
             telefono.MinimumWidth = 6;
             telefono.Name = "telefono";
-            telefono.Width = 125;
             // 
             // mail
             // 
             mail.HeaderText = "Correo";
             mail.MinimumWidth = 6;
             mail.Name = "mail";
-            mail.Width = 125;
             // 
             // aptoFisico
             // 
             aptoFisico.HeaderText = "AptoFisico";
             aptoFisico.MinimumWidth = 6;
             aptoFisico.Name = "aptoFisico";
-            aptoFisico.Width = 125;
+            // 
+            // btnVolver
+            // 
+            btnVolver.BackColor = SystemColors.ActiveCaption;
+            btnVolver.Font = new Font("Segoe UI", 10.8F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            btnVolver.Location = new Point(614, 558);
+            btnVolver.Name = "btnVolver";
+            btnVolver.Size = new Size(135, 60);
+            btnVolver.TabIndex = 7;
+            btnVolver.Text = "Volver";
+            btnVolver.UseVisualStyleBackColor = false;
+            btnVolver.Click += btnVolver_Click;
             // 
             // FormListarClientes
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(993, 366);
+            ClientSize = new Size(800, 653);
+            Controls.Add(btnVolver);
             Controls.Add(dataGridView1);
             Controls.Add(listarClientes);
             Controls.Add(pictureBox1);
@@ -178,5 +185,6 @@
         private DataGridViewTextBoxColumn telefono;
         private DataGridViewTextBoxColumn mail;
         private DataGridViewTextBoxColumn aptoFisico;
+        private Button btnVolver;
     }
 }

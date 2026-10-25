@@ -17,7 +17,7 @@ namespace ClubDeportivo
         public FormListarClientes()
         {
             InitializeComponent();
-            ListarClientes ();
+            ListarClientes();
         }
 
         public void ListarClientes()
@@ -68,6 +68,17 @@ namespace ClubDeportivo
             catch (Exception ex)
             {
                 MessageBox.Show("Error al cargar los clientes: " + ex.Message);
+            }
+        }
+
+        private void btnVolver_Click(object sender, EventArgs e)
+        {
+            {
+                // NAVEGACIÓN ENTRE FORMULARIOS:
+                // Cerramos el formulario de vencimientos.
+                // Como se abrirá mediante ShowDialog(),
+                // el usuario regresará al menú principal.
+                this.Close();
             }
         }
     }

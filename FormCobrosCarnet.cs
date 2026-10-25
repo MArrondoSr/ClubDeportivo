@@ -174,7 +174,17 @@ namespace ClubDeportivo
 
                 txtImporte.Clear();
                 cmbMedioPago.SelectedIndex = 0;
+                // Abre el formulario del carnet del socio recién asociado.
+                // Usa el segundo constructor que recibe tipo y número de documento.
+                FormCarnet formularioCarnet = new FormCarnet(
+                    cmbTipoDocumento.Text,
+                    txtNroDocumento.Text.Trim()
+                );
+
+                formularioCarnet.Show();
             }
+
+
             catch (Exception ex)
             {
                 MessageBox.Show(

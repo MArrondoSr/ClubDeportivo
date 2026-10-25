@@ -18,7 +18,15 @@ namespace ClubDeportivo
             InitializeComponent();
 
         }
+        // Constructor sobrecargado: recibe los datos del cliente
+        // cuando se abre desde FormCobrosCarnet.
+        public FormCarnet(string tipoDoc, string nroDoc)
+        {
+            InitializeComponent();
 
+            tipoDocRecibido = tipoDoc;
+            nroDocRecibido = nroDoc;
+        }
         private void FormCarnet_Load(object sender, EventArgs e)
         {
             if (!string.IsNullOrEmpty(nroDocRecibido))
