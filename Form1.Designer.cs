@@ -36,6 +36,7 @@
             btnVtos = new Button();
             btnCerrar = new Button();
             btnListarClientes = new Button();
+            btnCarnet = new Button();
             ((System.ComponentModel.ISupportInitialize)pictureBox1).BeginInit();
             SuspendLayout();
             // 
@@ -43,7 +44,7 @@
             // 
             btnRegistrarCliente.BackColor = SystemColors.ActiveCaption;
             btnRegistrarCliente.Font = new Font("Segoe UI", 12F);
-            btnRegistrarCliente.Location = new Point(254, 193);
+            btnRegistrarCliente.Location = new Point(142, 205);
             btnRegistrarCliente.Name = "btnRegistrarCliente";
             btnRegistrarCliente.Size = new Size(182, 65);
             btnRegistrarCliente.TabIndex = 1;
@@ -75,7 +76,7 @@
             // 
             btnCobrosCarnet.BackColor = SystemColors.ActiveCaption;
             btnCobrosCarnet.Font = new Font("Segoe UI", 12F);
-            btnCobrosCarnet.Location = new Point(254, 353);
+            btnCobrosCarnet.Location = new Point(142, 365);
             btnCobrosCarnet.Name = "btnCobrosCarnet";
             btnCobrosCarnet.Size = new Size(182, 65);
             btnCobrosCarnet.TabIndex = 4;
@@ -87,7 +88,7 @@
             // 
             btnVtos.BackColor = SystemColors.ActiveCaption;
             btnVtos.Font = new Font("Segoe UI", 12F);
-            btnVtos.Location = new Point(254, 437);
+            btnVtos.Location = new Point(142, 449);
             btnVtos.Name = "btnVtos";
             btnVtos.Size = new Size(182, 65);
             btnVtos.TabIndex = 6;
@@ -110,7 +111,7 @@
             // 
             btnListarClientes.BackColor = SystemColors.ActiveCaption;
             btnListarClientes.Font = new Font("Segoe UI", 12F);
-            btnListarClientes.Location = new Point(254, 273);
+            btnListarClientes.Location = new Point(142, 285);
             btnListarClientes.Name = "btnListarClientes";
             btnListarClientes.Size = new Size(182, 65);
             btnListarClientes.TabIndex = 5;
@@ -118,11 +119,24 @@
             btnListarClientes.UseVisualStyleBackColor = false;
             btnListarClientes.Click += btnListarClientes_Click;
             // 
+            // btnCarnet
+            // 
+            btnCarnet.BackColor = SystemColors.ActiveCaption;
+            btnCarnet.Font = new Font("Segoe UI", 12F);
+            btnCarnet.Location = new Point(391, 208);
+            btnCarnet.Name = "btnCarnet";
+            btnCarnet.Size = new Size(182, 65);
+            btnCarnet.TabIndex = 8;
+            btnCarnet.Text = "Carnet";
+            btnCarnet.UseVisualStyleBackColor = false;
+            btnCarnet.Click += btnCarnet_Click;
+            // 
             // Form1
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(694, 608);
+            Controls.Add(btnCarnet);
             Controls.Add(btnListarClientes);
             Controls.Add(btnCerrar);
             Controls.Add(btnVtos);
@@ -146,6 +160,6 @@
         private Button btnListarClientes;
         private Button btnVtos;
         private Button btnCerrar;
-        
+        private Button btnCarnet;
     }
 }

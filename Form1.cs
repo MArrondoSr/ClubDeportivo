@@ -50,5 +50,16 @@ namespace ClubDeportivo
             // el usuario debe cerrarlo antes de regresar al menú principal.
             formulario.ShowDialog();
         }
+
+        private void btnCarnet_Click(object sender, EventArgs e)
+        {
+            // Abrimos el formulario para consultar e imprimir
+            // el carnet de un socio existente.
+            // No genera un nuevo carnet ni registra pagos.
+            FormCarnet formulario = new FormCarnet();
+
+            // Apertura modal, igual que los demás formularios.
+            formulario.ShowDialog();
+        }
     }
 }

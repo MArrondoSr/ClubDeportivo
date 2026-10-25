@@ -15,8 +15,9 @@ namespace ClubDeportivo
         public FormLogin()
         {
             InitializeComponent();
+            this.AcceptButton = btnIngresar; // ingreso con enter
 
-          }
+        }
         private void btnIngresar_Click(object sender, EventArgs e)
         {
             string nombre = textUsuario.Text;
