@@ -10,7 +10,7 @@ namespace ClubDeportivo
     {
         private string tipoDocRecibido = "";
         private string nroDocRecibido = "";
-        private Cliente? clienteActual; // Guardamos el cliente buscado
+        private Cliente? clienteActual; // Guarda el cliente buscado
 
         // Constructor vacío (desde Menú Principal)
         public FormCarnet()
@@ -84,7 +84,7 @@ namespace ClubDeportivo
 
             if (vencimiento.HasValue)
             {
-                // Mostramos la fecha completa del último vencimiento
+                // Muestra la fecha completa del último vencimiento
                 // registrado en la base de datos.
                 lblCarnetVencimiento.Text =
                     "Vence: " + vencimiento.Value.ToString("dd/MM/yyyy");
@@ -101,7 +101,7 @@ namespace ClubDeportivo
 
         private void btnImprimir_Click(object sender, EventArgs e)
         {
-            // Verificamos que haya un socio con carnet seleccionado.
+            // Verifica que haya un socio con carnet seleccionado.
             if (clienteActual == null || !clienteActual.esSocio())
             {
                 MessageBox.Show("Primero debe buscar un socio con carnet.");

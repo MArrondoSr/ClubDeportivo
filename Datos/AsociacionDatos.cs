@@ -28,7 +28,7 @@ namespace ClubDeportivo.Datos
                         CarnetDatos carnetDatos = new CarnetDatos();
 
                         // PERSISTENCIA:
-                        // Registramos el pago inicial y recuperamos su ID,
+                        // Registra el pago inicial y recupera su ID,
                         // necesario para vincularlo con la primera cuota.
                         int idPago = pagoDatos.registrarPago(
                             idCliente,
@@ -38,7 +38,7 @@ namespace ClubDeportivo.Datos
                         );
 
                         // ASOCIACIÓN:
-                        // Generamos el carnet correspondiente al nuevo socio.
+                        // Genera el carnet correspondiente al nuevo socio.
                         int nroCarnet = carnetDatos.generarCarnet(
                             idCliente,
                             conexion,
@@ -52,15 +52,38 @@ namespace ClubDeportivo.Datos
                         //
                         // El constructor de Cuota calcula automáticamente
                         // el vencimiento sumando un mes calendario.
+                        // Fecha de inicio de vigencia de la primera cuota.
+                        // Inicialmente coincide con la fecha del pago.
+                        //Si el tipo tenia pagado el día coo No Socio el pago de
+                        //asociacion se registra con la fecha posterior
+                        // REGLA DE NEGOCIO:
+                        // Si el cliente ya abonó un pase diario en la fecha
+                        // de asociación, la primera cuota comenzará al día siguiente.
+
+                        DateTime fechaInicioCuota = pago.getFecha().Date;
+
+                        bool tienePaseDiario = pagoDatos.existePagoDiario(
+                            idCliente,
+                            fechaInicioCuota,
+                            conexion,
+                            transaccion
+                        );
+
+                        if (tienePaseDiario)
+                        {
+                            fechaInicioCuota = fechaInicioCuota.AddDays(1);
+                        }
+
+                        // Crea la primera cuota con la fecha de inicio calculada.
                         Cuota primeraCuota = new Cuota(
                             0,
-                            pago.getFecha(),
+                            fechaInicioCuota,
                             null,
                             pago.getImporte()
                         );
 
                         // PERSISTENCIA:
-                        // Registramos la primera cuota dentro de la misma
+                        // Registra la primera cuota dentro de la misma
                         // transacción que el pago y el carnet.
                         CuotaDatos cuotaDatos = new CuotaDatos();
 
@@ -83,7 +106,7 @@ namespace ClubDeportivo.Datos
                         );
 
                         // TRANSACCIÓN:
-                        // Confirmamos conjuntamente el pago, el carnet
+                        // Confirma conjuntamente el pago, el carnet
                         // y la primera cuota mensual.
                         transaccion.Commit();
 
@@ -92,10 +115,10 @@ namespace ClubDeportivo.Datos
                     catch
                     {
                         // Si falla alguna operación,
-                        // deshacemos todos los cambios.
+                        // deshace todos los cambios.
                         transaccion.Rollback();
 
-                        // Evitamos conservar en memoria un ID
+                        // Evita conservar en memoria un ID
                         // correspondiente a un pago revertido.
                         pago.setIdPago(0);
 

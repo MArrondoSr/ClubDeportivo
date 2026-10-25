@@ -48,6 +48,7 @@
             btnLimpiar = new Button();
             btnVolver = new Button();
             cmbTipoDocumento = new ComboBox();
+            btnComprobante = new Button();
             ((System.ComponentModel.ISupportInitialize)pictureBox1).BeginInit();
             SuspendLayout();
             // 
@@ -248,11 +249,25 @@
             cmbTipoDocumento.TabIndex = 18;
             cmbTipoDocumento.SelectedIndexChanged += cmbTipoDocumento_SelectedIndexChanged;
             // 
+            // btnComprobante
+            // 
+            btnComprobante.BackColor = SystemColors.ActiveCaption;
+            btnComprobante.Enabled = false;
+            btnComprobante.Font = new Font("Segoe UI", 9F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            btnComprobante.Location = new Point(526, 454);
+            btnComprobante.Name = "btnComprobante";
+            btnComprobante.Size = new Size(162, 49);
+            btnComprobante.TabIndex = 19;
+            btnComprobante.Text = "Generar Comprobante PDF";
+            btnComprobante.UseVisualStyleBackColor = false;
+            btnComprobante.Click += btnComprobante_Click;
+            // 
             // FormCobrosCarnet
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(700, 703);
+            Controls.Add(btnComprobante);
             Controls.Add(cmbTipoDocumento);
             Controls.Add(btnVolver);
             Controls.Add(btnLimpiar);
@@ -300,5 +315,6 @@
         private Button btnLimpiar;
         private Button btnVolver;
         private ComboBox cmbTipoDocumento;
+        private Button btnComprobante;
     }
 }

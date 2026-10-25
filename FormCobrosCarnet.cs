@@ -14,6 +14,8 @@ namespace ClubDeportivo
     public partial class FormCobrosCarnet : Form
     {
         private Cliente? clienteSeleccionado;
+        private Pago? ultimoPagoRegistrado;
+        private string ultimoConcepto = "";
         public FormCobrosCarnet()
         {
             InitializeComponent();
@@ -24,6 +26,9 @@ namespace ClubDeportivo
 
         private void btnBuscar_Click(object sender, EventArgs e)
         {
+            ultimoPagoRegistrado = null;
+            ultimoConcepto = "";
+            btnComprobante.Enabled = false;
             // Validamos que se haya seleccionado un tipo de documento.
             if (cmbTipoDocumento.SelectedIndex == -1)
             {
@@ -80,6 +85,10 @@ namespace ClubDeportivo
 
         private void btnEmitirCarnet_Click(object sender, EventArgs e)
         {
+            ultimoPagoRegistrado = null;
+            ultimoConcepto = "";
+            btnComprobante.Enabled = false;
+
             if (clienteSeleccionado == null)
             {
                 MessageBox.Show("Primero debe buscar un cliente.");
@@ -151,6 +160,9 @@ namespace ClubDeportivo
                 Carnet carnet = new Carnet(nroCarnet);
                 clienteSeleccionado.asignarCarnet(carnet);
                 clienteSeleccionado.agregarPago(pago);
+                ultimoPagoRegistrado = pago;
+                ultimoConcepto = "Primera cuota mensual";
+                btnComprobante.Enabled = true;
 
                 lblEstado.Text = "Socio";
 
@@ -188,13 +200,18 @@ namespace ClubDeportivo
 
         private void btnRegistrarPago_Click(object sender, EventArgs e)
         {
+
+            ultimoPagoRegistrado = null;
+            ultimoConcepto = "";
+            btnComprobante.Enabled = false;
+
             if (clienteSeleccionado == null)
             {
                 MessageBox.Show("Primero debe buscar un cliente.");
                 return;
             }
 
-            
+
             if (!decimal.TryParse(txtImporte.Text, out decimal importe)
                 || importe <= 0)
             {
@@ -283,6 +300,9 @@ namespace ClubDeportivo
                     // Actualizamos el objeto Cliente únicamente después
                     // de registrar correctamente el pago en MySQL.
                     clienteSeleccionado.agregarPago(pago);
+                    ultimoPagoRegistrado = pago;
+                    ultimoConcepto = "Pase diario";
+                    btnComprobante.Enabled = true;
 
                     // POLIMORFISMO:
                     // obtenerDetalle() ejecuta el comportamiento
@@ -331,6 +351,9 @@ namespace ClubDeportivo
                 // Agregamos el pago al objeto Cliente solamente
                 // después de confirmar la transacción.
                 clienteSeleccionado.agregarPago(pago);
+                ultimoPagoRegistrado = pago;
+                ultimoConcepto = "Renovación cuota mensual";
+                btnComprobante.Enabled = true;
 
                 // POLIMORFISMO EN EJECUCIÓN:
                 // obtenerDetalle() utiliza la implementación
@@ -364,7 +387,11 @@ namespace ClubDeportivo
 
             // elimina la referencia al cliente seleccionado.
             // Evita registrar pagos o emitir carnets al cliente anterior.
+            //Evita que si queda el pago de un cliente y se ebusca otro se asigne erroneamente
             clienteSeleccionado = null;
+            ultimoPagoRegistrado = null;
+            ultimoConcepto = "";
+            btnComprobante.Enabled = false;
 
             // restablece los campos correspondientes al pago.
             txtImporte.Clear();
@@ -391,7 +418,9 @@ namespace ClubDeportivo
             // Si cambia el documento, el cliente seleccionado
             // deja de corresponder necesariamente a la búsqueda actual.
             clienteSeleccionado = null;
-
+            ultimoPagoRegistrado = null;
+            ultimoConcepto = "";
+            btnComprobante.Enabled = false;
             lblNombre.Text = "";
             lblApellido.Text = "";
             lblEstado.Text = "";
@@ -402,10 +431,58 @@ namespace ClubDeportivo
             // Al cambiar el tipo de documento, invalidamos
             // la selección del cliente anterior.
             clienteSeleccionado = null;
+            ultimoPagoRegistrado = null;
+            ultimoConcepto = "";
+            btnComprobante.Enabled = false;
 
             lblNombre.Text = "";
             lblApellido.Text = "";
             lblEstado.Text = "";
+        }
+
+        private void btnComprobante_Click(object sender, EventArgs e)
+        {
+            // Verifica que exista un pago registrado
+            // y un cliente seleccionado.
+            if (clienteSeleccionado == null || ultimoPagoRegistrado == null)
+            {
+                MessageBox.Show("No hay un pago registrado para generar el comprobante.");
+                return;
+            }
+
+            using SaveFileDialog guardar = new SaveFileDialog();
+
+            guardar.Filter = "Archivo PDF (*.pdf)|*.pdf";
+            guardar.FileName = "Comprobante_" +
+                                 ultimoPagoRegistrado.getIdPago() + ".pdf";
+
+            if (guardar.ShowDialog() != DialogResult.OK)
+            {
+                return;
+            }
+
+            try
+            {
+                // POLIMORFISMO MEDIANTE INTERFACES:
+                // La referencia es IDocumentoImprimible,
+                // pero el objeto concreto es ReciboPdf.
+                IDocumentoImprimible documento = new ReciboPdf(
+                    clienteSeleccionado,
+                    ultimoPagoRegistrado,
+                    ultimoConcepto
+                );
+
+                documento.GenerarPdf(guardar.FileName);
+
+                MessageBox.Show("Se envió el comprobante a generar como PDF.");
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(
+                    "No se pudo generar el comprobante PDF.\n\n" +
+                    ex.Message
+                );
+            }
         }
     }
 }

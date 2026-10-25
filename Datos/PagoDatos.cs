@@ -181,5 +181,35 @@ namespace ClubDeportivo.Datos
                 }
             }
         }
+
+        // SOBRECARGA:
+        // Consulta si existe un pase diario utilizando una conexión
+        // y una transacción proporcionadas por otra operación.
+        public bool existePagoDiario(
+            int idCliente,
+            DateTime fecha,
+            MySqlConnection conexion,
+            MySqlTransaction transaccion)
+        {
+            string sql = @"
+        SELECT COUNT(*)
+        FROM pagos
+        WHERE idCliente = @idCliente
+          AND fecha = @fecha
+          AND concepto = 'PASE_DIARIO'";
+
+            using (MySqlCommand comando =
+                new MySqlCommand(sql, conexion, transaccion))
+            {
+                comando.Parameters.AddWithValue("@idCliente", idCliente);
+                comando.Parameters.AddWithValue("@fecha", fecha.Date);
+
+                int cantidad = Convert.ToInt32(
+                    comando.ExecuteScalar()
+                );
+
+                return cantidad > 0;
+            }
+        }
     }
 }

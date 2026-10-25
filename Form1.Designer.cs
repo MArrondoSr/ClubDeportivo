@@ -80,7 +80,7 @@
             btnCobrosCarnet.Name = "btnCobrosCarnet";
             btnCobrosCarnet.Size = new Size(182, 65);
             btnCobrosCarnet.TabIndex = 4;
-            btnCobrosCarnet.Text = "Cobros y Carnet";
+            btnCobrosCarnet.Text = "Cobros";
             btnCobrosCarnet.UseVisualStyleBackColor = false;
             btnCobrosCarnet.Click += btnCobrosCarnet_Click;
             // 
