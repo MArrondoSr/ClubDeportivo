@@ -44,7 +44,20 @@ namespace ClubDeportivo
                 MessageBox.Show("Debe ingresar nombre y apellido.");
                 return;
             }
+            // REGLA DE NEGOCIO:
+            // El teléfono celular es obligatorio para registrar un cliente.
+            if (string.IsNullOrWhiteSpace(txtTelefono.Text))
+            {
+                MessageBox.Show(
+                    "Debe ingresar un número de teléfono celular.",
+                    "Teléfono obligatorio",
+                    MessageBoxButtons.OK,
+                    MessageBoxIcon.Warning
+                );
 
+                txtTelefono.Focus();
+                return;
+            }
             // REGLA DE NEGOCIO:
             // Según los requisitos acordados para el sistema,
             // no se permite registrar un cliente que no haya
@@ -71,7 +84,24 @@ namespace ClubDeportivo
             string nombre = txtNombre.Text;
             string apellido = txtApellido.Text;
             string domicilio = txtDomicilio.Text;
-            string telefono = txtTelefono.Text;
+            // Normalizamos el teléfono al formato internacional de WhatsApp.
+            string? telefono = NormalizarTelefono(txtTelefono.Text);
+
+            // Si el formato no es válido, interrumpimos el registro.
+            if (telefono == null)
+            {
+                MessageBox.Show(
+                    "Ingrese un teléfono celular válido, incluyendo el código de área.\n\n" +
+                    "Ejemplo: 11 6252-0330\n" +
+                    "También se acepta: +54 9 11 6252-0330",
+                    "Teléfono inválido",
+                    MessageBoxButtons.OK,
+                    MessageBoxIcon.Warning
+                );
+
+                txtTelefono.Focus();
+                return;
+            }
             string mail = txtMail.Text;
             bool aptoFisico = chkAptoFisico.Checked;
 
@@ -131,6 +161,33 @@ namespace ClubDeportivo
             // Como fue abierto mediante ShowDialog(), al cerrarlo
             // se devuelve el control al menú principal (Form1).
             this.Close();
+        }
+
+        private static string? NormalizarTelefono(string telefono)
+        {
+            // Eliminamos espacios, guiones, paréntesis y el signo +.
+            string numeros = new string(
+                telefono.Where(char.IsDigit).ToArray()
+            );
+
+            // Formato internacional: 549 + 10 dígitos.
+            if (numeros.StartsWith("549") && numeros.Length == 13)
+                return numeros;
+
+            // Formato con código de país, sin el 9.
+            if (numeros.StartsWith("54") && numeros.Length == 12)
+                return "549" + numeros.Substring(2);
+
+            // Formato nacional con cero inicial.
+            if (numeros.StartsWith("0") && numeros.Length == 11)
+                numeros = numeros.Substring(1);
+
+            // Formato nacional: código de área + número local.
+            if (numeros.Length == 10)
+                return "549" + numeros;
+
+            // Número incompleto o formato no admitido.
+            return null;
         }
     }
 }

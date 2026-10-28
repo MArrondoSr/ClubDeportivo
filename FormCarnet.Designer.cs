@@ -38,6 +38,7 @@
             lblCarnetNroSocio = new Label();
             picLogoClub = new PictureBox();
             btnImprimir = new Button();
+            btnWhatsApp = new Button();   // NUEVO
             printDocument1 = new System.Drawing.Printing.PrintDocument();
             printDialog1 = new PrintDialog();
             pictureBox2 = new PictureBox();
@@ -272,6 +273,19 @@
             btnImprimir.Visible = false;
             btnImprimir.Click += btnImprimir_Click;
             // 
+            // btnWhatsApp   (NUEVO)
+            // 
+            btnWhatsApp.BackColor = Color.LightGreen;
+            btnWhatsApp.Font = new Font("Segoe UI", 12F, FontStyle.Bold);
+            btnWhatsApp.Location = new Point(589, 404);
+            btnWhatsApp.Name = "btnWhatsApp";
+            btnWhatsApp.Size = new Size(107, 38);
+            btnWhatsApp.TabIndex = 16;
+            btnWhatsApp.Text = "WhatsApp";
+            btnWhatsApp.UseVisualStyleBackColor = false;
+            btnWhatsApp.Visible = false;
+            btnWhatsApp.Click += btnWhatsApp_Click;
+            // 
             // printDocument1
             // 
             printDocument1.PrintPage += printDocument1_PrintPage;
@@ -293,6 +307,7 @@
             ClientSize = new Size(739, 589);
             Controls.Add(pictureBox2);
             Controls.Add(btnImprimir);
+            Controls.Add(btnWhatsApp);   // NUEVO
             Controls.Add(panelCarnet);
             Controls.Add(lblEstado);
             Controls.Add(lblApellido);
@@ -335,6 +350,7 @@
         private Label lblCarnetNroSocio;
         private PictureBox picLogoClub;
         private Button btnImprimir;
+        private Button btnWhatsApp;   // NUEVO
         private System.Drawing.Printing.PrintDocument printDocument1;
         private PrintDialog printDialog1;
         private PictureBox pictureBox2;

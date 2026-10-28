@@ -17,12 +17,17 @@ namespace ClubDeportivo
         {
             InitializeComponent();
 
+            // NUEVO: el boton de WhatsApp se muestra y se oculta junto con el de Imprimir
+            btnImprimir.VisibleChanged += (s, e) => btnWhatsApp.Visible = btnImprimir.Visible;
         }
         // Constructor sobrecargado: recibe los datos del cliente
         // cuando se abre desde FormCobrosCarnet.
         public FormCarnet(string tipoDoc, string nroDoc)
         {
             InitializeComponent();
+
+            // NUEVO: el boton de WhatsApp se muestra y se oculta junto con el de Imprimir
+            btnImprimir.VisibleChanged += (s, e) => btnWhatsApp.Visible = btnImprimir.Visible;
 
             tipoDocRecibido = tipoDoc;
             nroDocRecibido = nroDoc;
@@ -146,6 +151,33 @@ namespace ClubDeportivo
             {
                 MessageBox.Show(
                     "No se pudo generar el PDF: " + ex.Message);
+            }
+        }
+        // Envia el carnet por WhatsApp (la logica esta en la clase EnvioWhatsApp)
+        private async void btnWhatsApp_Click(object sender, EventArgs e)
+        {
+            if (clienteActual == null || !clienteActual.esSocio())
+            {
+                MessageBox.Show("Primero debe buscar un socio con carnet.");
+                return;
+            }
+
+            try
+            {
+                MessageBox.Show("Se abrio WhatsApp en el chat del socio.\n\n" +
+                                "La imagen del carnet ya esta copiada:\n" +
+                                "en el chat presione Ctrl + V y despues Enviar.",
+                                "Enviar por WhatsApp", MessageBoxButtons.OK, MessageBoxIcon.Information);
+
+                await Task.Delay(20);
+
+                EnvioWhatsApp envio = new EnvioWhatsApp(panelCarnet, clienteActual);
+                envio.Enviar(lblCarnetVencimiento.Text);
+
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("No se pudo abrir WhatsApp: " + ex.Message);
             }
         }
 
