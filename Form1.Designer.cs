@@ -37,6 +37,7 @@
             btnCerrar = new Button();
             btnListarClientes = new Button();
             btnCarnet = new Button();
+            btnEstadisticas = new Button();
             ((System.ComponentModel.ISupportInitialize)pictureBox1).BeginInit();
             SuspendLayout();
             // 
@@ -76,7 +77,7 @@
             // 
             btnCobrosCarnet.BackColor = SystemColors.ActiveCaption;
             btnCobrosCarnet.Font = new Font("Segoe UI", 12F);
-            btnCobrosCarnet.Location = new Point(142, 365);
+            btnCobrosCarnet.Location = new Point(391, 300);
             btnCobrosCarnet.Name = "btnCobrosCarnet";
             btnCobrosCarnet.Size = new Size(182, 65);
             btnCobrosCarnet.TabIndex = 4;
@@ -88,7 +89,7 @@
             // 
             btnVtos.BackColor = SystemColors.ActiveCaption;
             btnVtos.Font = new Font("Segoe UI", 12F);
-            btnVtos.Location = new Point(142, 449);
+            btnVtos.Location = new Point(142, 406);
             btnVtos.Name = "btnVtos";
             btnVtos.Size = new Size(182, 65);
             btnVtos.TabIndex = 6;
@@ -111,7 +112,7 @@
             // 
             btnListarClientes.BackColor = SystemColors.ActiveCaption;
             btnListarClientes.Font = new Font("Segoe UI", 12F);
-            btnListarClientes.Location = new Point(142, 285);
+            btnListarClientes.Location = new Point(142, 300);
             btnListarClientes.Name = "btnListarClientes";
             btnListarClientes.Size = new Size(182, 65);
             btnListarClientes.TabIndex = 5;
@@ -131,11 +132,24 @@
             btnCarnet.UseVisualStyleBackColor = false;
             btnCarnet.Click += btnCarnet_Click;
             // 
+            // btnEstadisticas
+            // 
+            btnEstadisticas.BackColor = SystemColors.ActiveCaption;
+            btnEstadisticas.Font = new Font("Segoe UI", 12F);
+            btnEstadisticas.Location = new Point(391, 406);
+            btnEstadisticas.Name = "btnEstadisticas";
+            btnEstadisticas.Size = new Size(182, 65);
+            btnEstadisticas.TabIndex = 9;
+            btnEstadisticas.Text = "Estadísticas";
+            btnEstadisticas.UseVisualStyleBackColor = false;
+            btnEstadisticas.Click += btnEstadisticas_Click;
+            // 
             // Form1
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(694, 608);
+            Controls.Add(btnEstadisticas);
             Controls.Add(btnCarnet);
             Controls.Add(btnListarClientes);
             Controls.Add(btnCerrar);
@@ -161,5 +175,6 @@
         private Button btnVtos;
         private Button btnCerrar;
         private Button btnCarnet;
+        private Button btnEstadisticas;
     }
 }

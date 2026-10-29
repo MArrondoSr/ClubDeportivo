@@ -61,5 +61,20 @@ namespace ClubDeportivo
             // Apertura modal, igual que los demás formularios.
             formulario.ShowDialog();
         }
+
+        private void btnEstadisticas_Click(object sender, EventArgs e)
+        {
+            int socios = EstadisticasClub.ContarSocios();
+            int noSocios = EstadisticasClub.ContarNoSocios();
+
+            MessageBox.Show(
+                $"Socios: {socios}\n" +
+                $"No socios: {noSocios}\n" +
+                $"Total de clientes: {socios + noSocios}",
+                "Estadísticas de " + EstadisticasClub.NombreClub,
+                MessageBoxButtons.OK,
+                MessageBoxIcon.Information
+            );
+        }
     }
 }

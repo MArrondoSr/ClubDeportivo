@@ -29,18 +29,27 @@ namespace ClubDeportivo
                 using (MySqlConnection conexion = conexionDB.abrirConexion())
                 {
                     string consulta = @"SELECT
-                       tipoDocumento,
-                       nroDocumento,
-                       nombre,
-                       apellido,
-                       domicilio,
-                       telefono,
-                       mail,
-                       CASE
-                           WHEN aptoFisico = 1 THEN 'Si'
-                           ELSE 'No'
-                       END AS aptoFisico
-                   FROM clientes";
+                                    c.tipoDocumento,
+                                    c.nroDocumento,
+                                    c.nombre,
+                                    c.apellido,
+                                    c.domicilio,
+                                    c.telefono,
+                                    c.mail,
+                                    CASE
+                                        WHEN c.aptoFisico = 1 THEN 'Si'
+                                        ELSE 'No'
+                                    END AS aptoFisico,
+                                    CASE
+                                        WHEN EXISTS (
+                                            SELECT 1
+                                            FROM carnets ca
+                                            WHERE ca.idCliente = c.idCliente
+                                        )
+                                        THEN 'Socio'
+                                        ELSE 'No socio'
+                                    END AS condicion
+                                FROM clientes c";
 
                     MySqlDataAdapter adaptador = new MySqlDataAdapter(consulta, conexion);
 
@@ -60,6 +69,7 @@ namespace ClubDeportivo
                     telefono.DataPropertyName = "telefono";
                     mail.DataPropertyName = "mail";
                     aptoFisico.DataPropertyName = "aptoFisico";
+                    condicion.DataPropertyName = "condicion";
 
                     dataGridView1.DataSource = tablaClientes;
 

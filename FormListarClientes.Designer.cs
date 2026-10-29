@@ -34,15 +34,16 @@
             pictureBox1 = new PictureBox();
             listarClientes = new Label();
             dataGridView1 = new DataGridView();
+            btnVolver = new Button();
             tipoDocumento = new DataGridViewTextBoxColumn();
             NroDocumento = new DataGridViewTextBoxColumn();
             nombre = new DataGridViewTextBoxColumn();
             apellido = new DataGridViewTextBoxColumn();
+            condicion = new DataGridViewTextBoxColumn();
             domicilio = new DataGridViewTextBoxColumn();
             telefono = new DataGridViewTextBoxColumn();
             mail = new DataGridViewTextBoxColumn();
             aptoFisico = new DataGridViewTextBoxColumn();
-            btnVolver = new Button();
             ((System.ComponentModel.ISupportInitialize)pictureBox1).BeginInit();
             ((System.ComponentModel.ISupportInitialize)dataGridView1).BeginInit();
             SuspendLayout();
@@ -79,7 +80,7 @@
             dataGridViewCellStyle1.WrapMode = DataGridViewTriState.True;
             dataGridView1.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle1;
             dataGridView1.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            dataGridView1.Columns.AddRange(new DataGridViewColumn[] { tipoDocumento, NroDocumento, nombre, apellido, domicilio, telefono, mail, aptoFisico });
+            dataGridView1.Columns.AddRange(new DataGridViewColumn[] { tipoDocumento, NroDocumento, nombre, apellido, condicion, domicilio, telefono, mail, aptoFisico });
             dataGridViewCellStyle2.Alignment = DataGridViewContentAlignment.MiddleLeft;
             dataGridViewCellStyle2.BackColor = SystemColors.Window;
             dataGridViewCellStyle2.Font = new Font("Segoe UI", 9F, FontStyle.Regular, GraphicsUnit.Point, 0);
@@ -93,6 +94,18 @@
             dataGridView1.RowHeadersWidth = 51;
             dataGridView1.Size = new Size(776, 350);
             dataGridView1.TabIndex = 3;
+            // 
+            // btnVolver
+            // 
+            btnVolver.BackColor = SystemColors.ActiveCaption;
+            btnVolver.Font = new Font("Segoe UI", 10.8F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            btnVolver.Location = new Point(614, 558);
+            btnVolver.Name = "btnVolver";
+            btnVolver.Size = new Size(135, 60);
+            btnVolver.TabIndex = 7;
+            btnVolver.Text = "Volver";
+            btnVolver.UseVisualStyleBackColor = false;
+            btnVolver.Click += btnVolver_Click;
             // 
             // tipoDocumento
             // 
@@ -120,6 +133,13 @@
             apellido.MinimumWidth = 6;
             apellido.Name = "apellido";
             // 
+            // condicion
+            // 
+            condicion.DataPropertyName = "condicion";
+            condicion.HeaderText = "Condición";
+            condicion.MinimumWidth = 6;
+            condicion.Name = "condicion";
+            // 
             // domicilio
             // 
             domicilio.HeaderText = "Domicilio";
@@ -144,18 +164,6 @@
             aptoFisico.MinimumWidth = 6;
             aptoFisico.Name = "aptoFisico";
             // 
-            // btnVolver
-            // 
-            btnVolver.BackColor = SystemColors.ActiveCaption;
-            btnVolver.Font = new Font("Segoe UI", 10.8F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            btnVolver.Location = new Point(614, 558);
-            btnVolver.Name = "btnVolver";
-            btnVolver.Size = new Size(135, 60);
-            btnVolver.TabIndex = 7;
-            btnVolver.Text = "Volver";
-            btnVolver.UseVisualStyleBackColor = false;
-            btnVolver.Click += btnVolver_Click;
-            // 
             // FormListarClientes
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
@@ -177,14 +185,15 @@
         private PictureBox pictureBox1;
         private Label listarClientes;
         private DataGridView dataGridView1;
+        private Button btnVolver;
         private DataGridViewTextBoxColumn tipoDocumento;
         private DataGridViewTextBoxColumn NroDocumento;
         private DataGridViewTextBoxColumn nombre;
         private DataGridViewTextBoxColumn apellido;
+        private DataGridViewTextBoxColumn condicion;
         private DataGridViewTextBoxColumn domicilio;
         private DataGridViewTextBoxColumn telefono;
         private DataGridViewTextBoxColumn mail;
         private DataGridViewTextBoxColumn aptoFisico;
-        private Button btnVolver;
     }
 }
