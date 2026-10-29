@@ -158,8 +158,9 @@
             Controls.Add(menuPrincipal);
             Controls.Add(pictureBox1);
             Controls.Add(btnRegistrarCliente);
+            Icon = (Icon)resources.GetObject("$this.Icon");
             Name = "Form1";
-            Text = "Form1";
+            Text = "Club Deportivo - Inicio";
             Load += Form1_Load;
             ((System.ComponentModel.ISupportInitialize)pictureBox1).EndInit();
             ResumeLayout(false);

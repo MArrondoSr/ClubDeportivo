@@ -56,7 +56,6 @@
             labelUsuario.Size = new Size(79, 28);
             labelUsuario.TabIndex = 1;
             labelUsuario.Text = "Usuario";
-            //labelUsuario.Click += this.label1_Click;
             // 
             // labelPassword
             // 
@@ -82,7 +81,6 @@
             textPassword.Size = new Size(226, 27);
             textPassword.TabIndex = 4;
             textPassword.UseSystemPasswordChar = true;
-            //textPassword.TextChanged += this.textPassword_TextChanged;
             // 
             // btnIngresar
             // 
@@ -94,7 +92,7 @@
             btnIngresar.TabIndex = 5;
             btnIngresar.Text = "Ingresar";
             btnIngresar.UseVisualStyleBackColor = false;
-            btnIngresar.Click += this.btnIngresar_Click;
+            btnIngresar.Click += btnIngresar_Click;
             // 
             // FormLogin
             // 
@@ -107,10 +105,10 @@
             Controls.Add(labelPassword);
             Controls.Add(labelUsuario);
             Controls.Add(pictureBox1);
+            Icon = (Icon)resources.GetObject("$this.Icon");
             Name = "FormLogin";
             StartPosition = FormStartPosition.CenterScreen;
             Text = "Club Deportivo - Ingreso";
-            //Load += this.FormLogin_Load;
             ((System.ComponentModel.ISupportInitialize)pictureBox1).EndInit();
             ResumeLayout(false);
             PerformLayout();

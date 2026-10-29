@@ -5,6 +5,7 @@ using System.Data;
 using System.Drawing;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using ClubDeportivo.Datos;
@@ -16,34 +17,100 @@ namespace ClubDeportivo
         public FormRegistroCliente()
         {
             InitializeComponent();
+            this.AcceptButton = btnRegistrar;
         }
 
-        private void btnCancelar_Click(object sender, EventArgs e)
-        {
-            this.Close();
-        }
+
         private void btnRegistrar_Click(object sender, EventArgs e)
         {
-            // Validamos que se haya seleccionado un tipo de documento.
+            // Válidamos que se haya seleccionado un tipo de documento.
             if (cmbTipoDocumento.SelectedIndex == -1)
             {
                 MessageBox.Show("Debe seleccionar un tipo de documento.");
                 return;
             }
 
-            // Validamos que se haya ingresado el número de documento.
+            // Válidamos que se haya ingresado el número de documento.
             if (string.IsNullOrWhiteSpace(txtNroDocumento.Text))
             {
                 MessageBox.Show("Debe ingresar el número de documento.");
                 return;
             }
 
+            // Válidamos por tipo de documento.
+            // Válidamos el DNI ingresado.
+            if (cmbTipoDocumento.SelectedIndex == 0)
+            {
+                if (!Regex.IsMatch(txtNroDocumento.Text, @"^[0-9]{7,8}$"))
+                {
+                    MessageBox.Show("Debe contener entre 7 u 8 números.",
+                                    "El número DNI no es válido.");
+                    txtNroDocumento.Focus();
+                    return;
+                }
+            }
+            // Válidamos el CUIL ingresado.
+            if (cmbTipoDocumento.SelectedIndex == 1)
+            {
+                if (!Regex.IsMatch(txtNroDocumento.Text, @"^[0-9]{11}$"))
+                {
+                    MessageBox.Show("Debe contener 11 números.\n" +
+                                    "Ejemplo: xx-xxxxxxxx-x",
+                                    "El CUIL no es válido");
+                    txtNroDocumento.Focus();
+                    return;
+                }
+            }
+            // Válidamos el LC ingresado.
+            if (cmbTipoDocumento.SelectedIndex == 2)
+            {
+                if (!Regex.IsMatch(txtNroDocumento.Text, @"^[0-9]{1,8}$"))
+                {
+                    MessageBox.Show("Debe contener hasta un maximo de 8 números.",
+                                    "El número de LC no es válido.");
+                    txtNroDocumento.Focus();
+                    return;
+                }
+            }
+            // Válidamos el LE ingresado.
+            if (cmbTipoDocumento.SelectedIndex == 3)
+            {
+                if (!Regex.IsMatch(txtNroDocumento.Text, @"^[0-9]{1,8}$"))
+                {
+                    MessageBox.Show("Debe contener hasta un maximo de 8 números.",
+                                    "El número de LE no es válido.");
+                    txtNroDocumento.Focus();
+                    return;
+                }
+            }
+            // NOTA: Debido a que un pasaporte puede contener letras
+            // y números de una longitud variable
+            // se verificara únicamente que no quede vácio el campo.
+
+            // Válidamos el nombre y apellido.
             if (string.IsNullOrWhiteSpace(txtNombre.Text) ||
                 string.IsNullOrWhiteSpace(txtApellido.Text))
             {
                 MessageBox.Show("Debe ingresar nombre y apellido.");
                 return;
             }
+            else if (!Regex.IsMatch(txtNombre.Text, @"^[a-zA-ZáéíóúÁÉÍÓÚñÑ\s]+$") ||
+                     !Regex.IsMatch(txtApellido.Text, @"^[a-zA-ZáéíóúÁÉÍÓÚñÑ\s]+$"))
+            {
+                MessageBox.Show("El nombre y apellido deben contener letras únicamente.");
+                return;
+            }
+
+            // Válidamos el correo.
+            if (txtMail.Text != "" && !Regex.IsMatch(txtMail.Text, @"^[^@\s]+@[^@\s]+\.[^@\s]+$"))
+            {
+                MessageBox.Show("El correo debe tener un formato correcto.\n"+
+                                "Ejemplo: club_poo123@gmail.com",
+                                "Formato de correo inválido");
+                return;
+            }
+
+
             // REGLA DE NEGOCIO:
             // El teléfono celular es obligatorio para registrar un cliente.
             if (string.IsNullOrWhiteSpace(txtTelefono.Text))
@@ -58,6 +125,7 @@ namespace ClubDeportivo
                 txtTelefono.Focus();
                 return;
             }
+
             // REGLA DE NEGOCIO:
             // Según los requisitos acordados para el sistema,
             // no se permite registrar un cliente que no haya
@@ -81,9 +149,12 @@ namespace ClubDeportivo
             // Recuperamos los datos ingresados en el formulario.
             string tipoDocumento = cmbTipoDocumento.Text;
             string nroDocumento = txtNroDocumento.Text.Trim();
-            string nombre = txtNombre.Text;
-            string apellido = txtApellido.Text;
-            string domicilio = txtDomicilio.Text;
+            string nombre = txtNombre.Text.Trim();
+            string apellido = txtApellido.Text.Trim();
+            string domicilio = txtDomicilio.Text.Trim();
+            string mail = txtMail.Text;
+            bool aptoFisico = chkAptoFisico.Checked;
+
             // Normalizamos el teléfono al formato internacional de WhatsApp.
             string? telefono = NormalizarTelefono(txtTelefono.Text);
 
@@ -102,8 +173,7 @@ namespace ClubDeportivo
                 txtTelefono.Focus();
                 return;
             }
-            string mail = txtMail.Text;
-            bool aptoFisico = chkAptoFisico.Checked;
+            
 
             // Creamos un objeto Cliente con los datos ingresados.
             // El idCliente será generado automáticamente por MySQL.

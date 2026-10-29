@@ -287,6 +287,7 @@
             Controls.Add(lblDni);
             Controls.Add(lblCobroscarnet);
             Controls.Add(pictureBox1);
+            Icon = (Icon)resources.GetObject("$this.Icon");
             Name = "FormCobrosCarnet";
             Text = "Cobros y Carnet";
             ((System.ComponentModel.ISupportInitialize)pictureBox1).EndInit();

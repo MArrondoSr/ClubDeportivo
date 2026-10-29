@@ -34,7 +34,6 @@
             pictureBox1 = new PictureBox();
             listarClientes = new Label();
             dataGridView1 = new DataGridView();
-            btnVolver = new Button();
             tipoDocumento = new DataGridViewTextBoxColumn();
             NroDocumento = new DataGridViewTextBoxColumn();
             nombre = new DataGridViewTextBoxColumn();
@@ -44,6 +43,7 @@
             telefono = new DataGridViewTextBoxColumn();
             mail = new DataGridViewTextBoxColumn();
             aptoFisico = new DataGridViewTextBoxColumn();
+            btnVolver = new Button();
             ((System.ComponentModel.ISupportInitialize)pictureBox1).BeginInit();
             ((System.ComponentModel.ISupportInitialize)dataGridView1).BeginInit();
             SuspendLayout();
@@ -94,18 +94,6 @@
             dataGridView1.RowHeadersWidth = 51;
             dataGridView1.Size = new Size(776, 350);
             dataGridView1.TabIndex = 3;
-            // 
-            // btnVolver
-            // 
-            btnVolver.BackColor = SystemColors.ActiveCaption;
-            btnVolver.Font = new Font("Segoe UI", 10.8F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            btnVolver.Location = new Point(614, 558);
-            btnVolver.Name = "btnVolver";
-            btnVolver.Size = new Size(135, 60);
-            btnVolver.TabIndex = 7;
-            btnVolver.Text = "Volver";
-            btnVolver.UseVisualStyleBackColor = false;
-            btnVolver.Click += btnVolver_Click;
             // 
             // tipoDocumento
             // 
@@ -164,6 +152,18 @@
             aptoFisico.MinimumWidth = 6;
             aptoFisico.Name = "aptoFisico";
             // 
+            // btnVolver
+            // 
+            btnVolver.BackColor = SystemColors.ActiveCaption;
+            btnVolver.Font = new Font("Segoe UI", 10.8F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            btnVolver.Location = new Point(614, 558);
+            btnVolver.Name = "btnVolver";
+            btnVolver.Size = new Size(135, 60);
+            btnVolver.TabIndex = 7;
+            btnVolver.Text = "Volver";
+            btnVolver.UseVisualStyleBackColor = false;
+            btnVolver.Click += btnVolver_Click;
+            // 
             // FormListarClientes
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
@@ -173,8 +173,9 @@
             Controls.Add(dataGridView1);
             Controls.Add(listarClientes);
             Controls.Add(pictureBox1);
+            Icon = (Icon)resources.GetObject("$this.Icon");
             Name = "FormListarClientes";
-            Text = "FormListarClientes";
+            Text = "Listado de Clientes";
             ((System.ComponentModel.ISupportInitialize)pictureBox1).EndInit();
             ((System.ComponentModel.ISupportInitialize)dataGridView1).EndInit();
             ResumeLayout(false);

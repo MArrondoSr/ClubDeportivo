@@ -23,7 +23,6 @@
             cmbTipoDocumento = new ComboBox();
             txtNroDocumento = new TextBox();
             btnBuscar = new Button();
-            btnEmitirCarnet = new Button();
             lblNombre = new Label();
             lblApellido = new Label();
             lblEstado = new Label();
@@ -38,10 +37,11 @@
             lblCarnetNroSocio = new Label();
             picLogoClub = new PictureBox();
             btnImprimir = new Button();
-            btnWhatsApp = new Button();   // NUEVO
+            btnWhatsApp = new Button();
             printDocument1 = new System.Drawing.Printing.PrintDocument();
             printDialog1 = new PrintDialog();
             pictureBox2 = new PictureBox();
+            btnVolver = new Button();
             panelCarnet.SuspendLayout();
             panelVencimiento.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)pictureBox1).BeginInit();
@@ -99,19 +99,6 @@
             btnBuscar.Text = "Buscar";
             btnBuscar.UseVisualStyleBackColor = false;
             btnBuscar.Click += btnBuscar_Click;
-            // 
-            // btnEmitirCarnet
-            // 
-            btnEmitirCarnet.BackColor = SystemColors.ActiveCaption;
-            btnEmitirCarnet.Font = new Font("Segoe UI", 12F);
-            btnEmitirCarnet.Location = new Point(589, 517);
-            btnEmitirCarnet.Name = "btnEmitirCarnet";
-            btnEmitirCarnet.Size = new Size(107, 38);
-            btnEmitirCarnet.TabIndex = 6;
-            btnEmitirCarnet.Text = "Generar Carnet";
-            btnEmitirCarnet.UseVisualStyleBackColor = false;
-            btnEmitirCarnet.Visible = false;
-            btnEmitirCarnet.Click += btnEmitirCarnet_Click;
             // 
             // lblNombre
             // 
@@ -264,7 +251,7 @@
             // 
             btnImprimir.BackColor = Color.LightGreen;
             btnImprimir.Font = new Font("Segoe UI", 12F, FontStyle.Bold);
-            btnImprimir.Location = new Point(589, 460);
+            btnImprimir.Location = new Point(589, 369);
             btnImprimir.Name = "btnImprimir";
             btnImprimir.Size = new Size(107, 38);
             btnImprimir.TabIndex = 11;
@@ -273,11 +260,11 @@
             btnImprimir.Visible = false;
             btnImprimir.Click += btnImprimir_Click;
             // 
-            // btnWhatsApp   (NUEVO)
+            // btnWhatsApp
             // 
             btnWhatsApp.BackColor = Color.LightGreen;
             btnWhatsApp.Font = new Font("Segoe UI", 12F, FontStyle.Bold);
-            btnWhatsApp.Location = new Point(589, 404);
+            btnWhatsApp.Location = new Point(589, 288);
             btnWhatsApp.Name = "btnWhatsApp";
             btnWhatsApp.Size = new Size(107, 38);
             btnWhatsApp.TabIndex = 16;
@@ -300,27 +287,40 @@
             pictureBox2.TabIndex = 12;
             pictureBox2.TabStop = false;
             // 
+            // btnVolver
+            // 
+            btnVolver.BackColor = SystemColors.ActiveCaption;
+            btnVolver.Font = new Font("Segoe UI", 10.8F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            btnVolver.Location = new Point(589, 448);
+            btnVolver.Name = "btnVolver";
+            btnVolver.Size = new Size(135, 60);
+            btnVolver.TabIndex = 17;
+            btnVolver.Text = "Volver";
+            btnVolver.UseVisualStyleBackColor = false;
+            btnVolver.Click += btnVolver_Click;
+            // 
             // FormCarnet
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(739, 589);
+            Controls.Add(btnVolver);
             Controls.Add(pictureBox2);
             Controls.Add(btnImprimir);
-            Controls.Add(btnWhatsApp);   // NUEVO
+            Controls.Add(btnWhatsApp);
             Controls.Add(panelCarnet);
             Controls.Add(lblEstado);
             Controls.Add(lblApellido);
             Controls.Add(lblNombre);
-            Controls.Add(btnEmitirCarnet);
             Controls.Add(btnBuscar);
             Controls.Add(txtNroDocumento);
             Controls.Add(cmbTipoDocumento);
             Controls.Add(lblTipoDoc);
             Controls.Add(lblTitulo);
+            Icon = (Icon)resources.GetObject("$this.Icon");
             Name = "FormCarnet";
             StartPosition = FormStartPosition.CenterScreen;
-            Text = "Gestión de Carnet";
+            Text = "  Gestión de Carnet";
             Load += FormCarnet_Load;
             panelCarnet.ResumeLayout(false);
             panelCarnet.PerformLayout();
@@ -339,7 +339,6 @@
         private ComboBox cmbTipoDocumento;
         private TextBox txtNroDocumento;
         private Button btnBuscar;
-        private Button btnEmitirCarnet;
         private Label lblNombre;
         private Label lblApellido;
         private Label lblEstado;
@@ -358,5 +357,6 @@
         private Label lblSubtituloCarnet;
         private Panel panelVencimiento;
         private Label lblCarnetVencimiento;
+        private Button btnVolver;
     }
 }

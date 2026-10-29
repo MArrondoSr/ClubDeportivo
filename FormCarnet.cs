@@ -16,9 +16,13 @@ namespace ClubDeportivo
         public FormCarnet()
         {
             InitializeComponent();
+            this.AcceptButton = btnBuscar; // Busca presionando enter.
 
             // NUEVO: el boton de WhatsApp se muestra y se oculta junto con el de Imprimir
             btnImprimir.VisibleChanged += (s, e) => btnWhatsApp.Visible = btnImprimir.Visible;
+
+            // Hacemos visible el boton para volver.
+            btnVolver.Visible = true;
         }
         // Constructor sobrecargado: recibe los datos del cliente
         // cuando se abre desde FormCobrosCarnet.
@@ -153,6 +157,7 @@ namespace ClubDeportivo
                     "No se pudo generar el PDF: " + ex.Message);
             }
         }
+
         // Envia el carnet por WhatsApp (la logica esta en la clase EnvioWhatsApp)
         private async void btnWhatsApp_Click(object sender, EventArgs e)
         {
@@ -195,6 +200,12 @@ namespace ClubDeportivo
 
             e.Graphics.DrawImage(bmp, x, y);
             e.HasMorePages = false;
+        }
+
+        // Boton para volver.
+        private void btnVolver_Click(object sender, EventArgs e)
+        {
+            this.Close();
         }
 
         // Los siguientes métodos limpian el carnet si se cambia el documento

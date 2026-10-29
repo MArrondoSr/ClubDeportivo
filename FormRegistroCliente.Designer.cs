@@ -44,7 +44,6 @@
             txtMail = new TextBox();
             chkAptoFisico = new CheckBox();
             btnRegistrar = new Button();
-            btnCancelar = new Button();
             btnLimpiar = new Button();
             btnVolver = new Button();
             cmbTipoDocumento = new ComboBox();
@@ -188,18 +187,6 @@
             btnRegistrar.UseVisualStyleBackColor = false;
             btnRegistrar.Click += btnRegistrar_Click;
             // 
-            // btnCancelar
-            // 
-            btnCancelar.BackColor = SystemColors.ActiveCaption;
-            btnCancelar.Font = new Font("Segoe UI", 12F);
-            btnCancelar.Location = new Point(86, 645);
-            btnCancelar.Name = "btnCancelar";
-            btnCancelar.Size = new Size(162, 49);
-            btnCancelar.TabIndex = 18;
-            btnCancelar.Text = "Cancelar";
-            btnCancelar.UseVisualStyleBackColor = false;
-            btnCancelar.Click += btnCancelar_Click;
-            // 
             // btnLimpiar
             // 
             btnLimpiar.BackColor = SystemColors.ActiveCaption;
@@ -253,7 +240,6 @@
             Controls.Add(cmbTipoDocumento);
             Controls.Add(btnVolver);
             Controls.Add(btnLimpiar);
-            Controls.Add(btnCancelar);
             Controls.Add(btnRegistrar);
             Controls.Add(chkAptoFisico);
             Controls.Add(txtTelefono);
@@ -269,8 +255,9 @@
             Controls.Add(txtNroDocumento);
             Controls.Add(label1);
             Controls.Add(pictureBox1);
+            Icon = (Icon)resources.GetObject("$this.Icon");
             Name = "FormRegistroCliente";
-            Text = "Registro de Clientes";
+            Text = "  Registro de Clientes";
             ((System.ComponentModel.ISupportInitialize)pictureBox1).EndInit();
             ResumeLayout(false);
             PerformLayout();
@@ -293,7 +280,6 @@
         private TextBox txtMail;
         private CheckBox chkAptoFisico;
         private Button btnRegistrar;
-        private Button btnCancelar;
         private Button btnLimpiar;
         private Button btnVolver;
         private ComboBox cmbTipoDocumento;
