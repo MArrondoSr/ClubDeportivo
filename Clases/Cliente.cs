@@ -1,10 +1,12 @@
-﻿using System;
+﻿
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-
-namespace ClubDeportivo
+using ClubDeportivo.Clases.Pagos;
+using ClubDeportivo.Clases.Carnets;
+namespace ClubDeportivo.Clases
 {
     internal class Cliente
 

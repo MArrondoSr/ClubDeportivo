@@ -1,4 +1,8 @@
-﻿using ClubDeportivo.Datos;
+﻿using ClubDeportivo.Clases;
+using ClubDeportivo.Clases.Carnets;
+using ClubDeportivo.Clases.Pagos;
+using ClubDeportivo.Datos;
+using ClubDeportivo.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;

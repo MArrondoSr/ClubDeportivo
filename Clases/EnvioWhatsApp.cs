@@ -1,6 +1,6 @@
 ﻿using System.Diagnostics;
 
-namespace ClubDeportivo
+namespace ClubDeportivo.Clases
 {
     // Envia el carnet por WhatsApp:
     // toma una "foto" del panel del carnet (igual que CarnetPdf),

@@ -5,8 +5,10 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Drawing;
 using System.Drawing.Printing;
+using ClubDeportivo.Clases.Pagos;
+using ClubDeportivo.Interfaces;
 
-namespace ClubDeportivo
+namespace ClubDeportivo.Clases
 {
     // INTERFACES:
     // ReciboPdf implementa el mismo contrato que CarnetPdf,

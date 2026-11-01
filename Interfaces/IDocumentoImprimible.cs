@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ClubDeportivo
+namespace ClubDeportivo.Interfaces
 {
     // INTERFAZ: define un contrato que deben cumplir
     // todas las clases que la implementen.

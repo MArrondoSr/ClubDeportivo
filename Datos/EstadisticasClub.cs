@@ -4,9 +4,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using MySql.Data.MySqlClient;
-using ClubDeportivo.Datos;
 
-namespace ClubDeportivo
+namespace ClubDeportivo.Datos
 {
     internal static class EstadisticasClub
     {

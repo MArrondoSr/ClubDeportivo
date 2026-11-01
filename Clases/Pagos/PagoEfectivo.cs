@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ClubDeportivo
+namespace ClubDeportivo.Clases.Pagos
 {
     // HERENCIA: PagoEfectivo reutiliza los atributos y metodos
     // comunes de Pago y define el comportamiento propio del efectivo

@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using MySql.Data.MySqlClient;
 using ClubDeportivo.Datos;
 
-namespace ClubDeportivo
+namespace ClubDeportivo.Clases
 {
     internal class Usuario
     {

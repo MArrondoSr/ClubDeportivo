@@ -22,40 +22,7 @@ namespace ClubDeportivo
 
         public void ListarClientes()
         {
-            ConexionDB conexionDB = new ConexionDB();
-
-            try
-            {
-                using (MySqlConnection conexion = conexionDB.abrirConexion())
-                {
-                    string consulta = @"SELECT
-                                    c.tipoDocumento,
-                                    c.nroDocumento,
-                                    c.nombre,
-                                    c.apellido,
-                                    c.domicilio,
-                                    c.telefono,
-                                    c.mail,
-                                    CASE
-                                        WHEN c.aptoFisico = 1 THEN 'Si'
-                                        ELSE 'No'
-                                    END AS aptoFisico,
-                                    CASE
-                                        WHEN EXISTS (
-                                            SELECT 1
-                                            FROM carnets ca
-                                            WHERE ca.idCliente = c.idCliente
-                                        )
-                                        THEN 'Socio'
-                                        ELSE 'No socio'
-                                    END AS condicion
-                                FROM clientes c";
-
-                    MySqlDataAdapter adaptador = new MySqlDataAdapter(consulta, conexion);
-
-                    DataTable tablaClientes = new DataTable();
-
-                    adaptador.Fill(tablaClientes);
+             DataTable tablaClientes = ClienteDatos.ListarClientes();
 
                     dataGridView1.AutoGenerateColumns = false;
 
@@ -73,12 +40,9 @@ namespace ClubDeportivo
 
                     dataGridView1.DataSource = tablaClientes;
 
-                }
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show("Error al cargar los clientes: " + ex.Message);
-            }
+                
+            
+           
         }
 
         private void btnVolver_Click(object sender, EventArgs e)

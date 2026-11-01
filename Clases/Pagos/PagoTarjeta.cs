@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ClubDeportivo
+namespace ClubDeportivo.Clases.Pagos
 {
     // HERENCIA: PagoTarjeta extiende Pago con la cantidad de cuotas
     // y el calculo del importe correspondiente a cada una.
