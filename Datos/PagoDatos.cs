@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using ClubDeportivo.Clases.Pagos;
 using MySql.Data.MySqlClient;
 
 

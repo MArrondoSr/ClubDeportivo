@@ -1,10 +1,11 @@
-﻿using System;
+﻿using ClubDeportivo.Clases;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ClubDeportivo
+namespace ClubDeportivo.Clases.Carnets
 {
     internal class Carnet
     {

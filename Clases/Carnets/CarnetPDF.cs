@@ -1,10 +1,11 @@
-﻿using Org.BouncyCastle.Asn1.Cms;
+﻿using ClubDeportivo.Interfaces;
+using Org.BouncyCastle.Asn1.Cms;
 using System;
 using System.Drawing;
 using System.Drawing.Printing;
 using System.Windows.Forms;
 
-namespace ClubDeportivo
+namespace ClubDeportivo.Clases.Carnets
 {
     // Implementa el contrato definido por IDocumentoImprimible.
     //Usamos TRES CONCEPTOS:

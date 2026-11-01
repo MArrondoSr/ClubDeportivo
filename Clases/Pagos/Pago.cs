@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ClubDeportivo
+namespace ClubDeportivo.Clases.Pagos
 {
     // ABSTRACCION: Pago representa los datos y comportamientos comunes
     // de cualquier cobro, sea efectivo o tarjeta.

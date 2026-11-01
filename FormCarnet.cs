@@ -1,8 +1,11 @@
-﻿using ClubDeportivo.Datos;
+﻿using ClubDeportivo.Clases;
+using ClubDeportivo.Datos;
+using ClubDeportivo.Interfaces;
 using System;
 using System.Drawing;
 using System.Drawing.Printing;
 using System.Windows.Forms;
+using ClubDeportivo.Clases.Carnets;
 
 namespace ClubDeportivo
 {

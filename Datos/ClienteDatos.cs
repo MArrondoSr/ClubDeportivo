@@ -1,8 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using ClubDeportivo.Clases;
+using ClubDeportivo.Clases.Carnets;
 using MySql.Data.MySqlClient;
 using MySqlX.XDevAPI;
 
@@ -157,6 +160,51 @@ namespace ClubDeportivo.Datos
 
                     return cliente;
                 }
+            }
+        }
+
+        public static DataTable ListarClientes()
+        {
+            ConexionDB conexionDB = new ConexionDB();
+            DataTable tablaClientes = new DataTable();
+            try {
+                using (MySqlConnection conexion = conexionDB.abrirConexion())
+                {
+                    string consulta = @"SELECT
+                                    c.tipoDocumento,
+                                    c.nroDocumento,
+                                    c.nombre,
+                                    c.apellido,
+                                    c.domicilio,
+                                    c.telefono,
+                                    c.mail,
+                                    CASE
+                                        WHEN c.aptoFisico = 1 THEN 'Si'
+                                        ELSE 'No'
+                                    END AS aptoFisico,
+                                    CASE
+                                        WHEN EXISTS (
+                                            SELECT 1
+                                            FROM carnets ca
+                                            WHERE ca.idCliente = c.idCliente
+                                        )
+                                        THEN 'Socio'
+                                        ELSE 'No socio'
+                                    END AS condicion
+                                FROM clientes c";
+
+                    MySqlDataAdapter adaptador = new MySqlDataAdapter(consulta, conexion);
+
+                   
+
+                    adaptador.Fill(tablaClientes);
+
+                    return tablaClientes;
+                }
+            }
+            catch (Exception ex) { 
+                MessageBox.Show("Error al cargar los clientes: " + ex.Message);
+                return tablaClientes;
             }
         }
     }
